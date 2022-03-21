@@ -26,12 +26,7 @@ public class AuthTest extends BaseTest {
             }
             """;
 
-    public static final String BAD_REASON =
-            """
-             {
-                 "reason" : "Bad credentials"
-             }
-             """;
+
 
     public static final User admin = new User("admin", "password123");
     public static final User wrong_cred = new User("user111", "password111");

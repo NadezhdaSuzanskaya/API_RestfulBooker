@@ -2,6 +2,7 @@ package localbooker;
 
 import io.restassured.http.ContentType;
 import model.Booking;
+import model.BookingDates;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class CreateBookingTest extends BaseTest {
 
     public static final String BOOKING_PATH = "booking";
+    model.Booking createdBooking = new model.Booking();
 
     @Test
     public void createBookingTest() {
@@ -32,25 +34,58 @@ public class CreateBookingTest extends BaseTest {
         System.out.println(new model.Booking());
         assertThat(createdBooking, equalTo(new model.Booking()));
     }
+
     @Test
     public void checkRequiredFirstnameTest() {
-        model.Booking createdBooking = new model.Booking();
+
         createdBooking.setFirstname("");
-        given()
-                .spec(requestSpec)
-                .body(createdBooking)
-                .when()
-                .log().body()
-                .post(BOOKING_URN)
-                .then()
-                .log().body()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+        requestExecution();
     }
 
     @Test
     public void checkRequiredLastnameTest() {
-        model.Booking createdBooking = new model.Booking();
+
         createdBooking.setLastname("");
+        requestExecution();
+    }
+
+    @Test
+    public void checkDepositpaidIsBooleanTest() {
+
+        createdBooking.setDepositPaid("test");
+        requestExecution();
+    }
+
+    @Test
+    public void checkInvalidCheckInValueTest() {
+
+        createdBooking.setBookingdates(BookingDates.builder().checkin("2020-13-13").build());
+        requestExecution();
+    }
+
+    @Test
+    public void checkInvalidCheckOutValueTest() {
+
+        createdBooking.setBookingdates(BookingDates.builder().checkout("2020-15-18").build());
+        requestExecution();
+    }
+
+    @Test
+    public void checkValueCheckinIsLessValueCheckoutTest() {
+
+        createdBooking.setBookingdates(BookingDates.builder().checkin("2022-01-10").build());
+        createdBooking.setBookingdates(BookingDates.builder().checkout("2020-11-11").build());
+        requestExecution();
+    }
+
+    @Test
+    public void checkRequiredAdditionalneedsTest() {
+
+        createdBooking.setAdditionalNeeds(null);
+        requestExecution();
+    }
+
+    private void requestExecution() {
         given()
                 .spec(requestSpec)
                 .body(createdBooking)
@@ -58,7 +93,8 @@ public class CreateBookingTest extends BaseTest {
                 .log().body()
                 .post(BOOKING_URN)
                 .then()
-                .log().body()
+                .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
+
 }

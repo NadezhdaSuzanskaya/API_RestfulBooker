@@ -55,5 +55,12 @@ public abstract class BaseAdapter {
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
-
+    public ValidatableResponse put() {
+        return given()
+                .spec(requestSpec)
+                .when()
+                .put(endpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK);
+    }
 }

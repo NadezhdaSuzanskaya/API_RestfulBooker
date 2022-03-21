@@ -22,7 +22,8 @@ public class Booking {
     public int totalPrice = 101;
     @SerializedName("depositpaid")
     @Builder.Default
-    public boolean depositPaid = true;
+    public String depositPaid = "true";
+
     @Builder.Default
     public BookingDates bookingdates = new BookingDates();
     @SerializedName("additionalneeds")
