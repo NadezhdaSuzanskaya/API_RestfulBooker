@@ -1,0 +1,12 @@
+{
+  "serialise libs": ["gson", "jackson"],
+  "firstname" : "Roman",
+  "lastname" : "Shcherbich",
+  "totalprice" : "777",
+  "depositpaid" : true,
+  "bookingdates" : {
+    "checkin": "2015-11-12",
+    "checkout": null
+  },
+  "additionalneeds" : "Breakfast"
+}
