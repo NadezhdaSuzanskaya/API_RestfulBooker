@@ -22,7 +22,7 @@ public class AuthTest extends BaseTest {
     public static final String CREDS = """
             {
                 "username" : "admin",
-                "password" : "password1234"
+                "password" : "password123"
             }
             """;
 
@@ -59,21 +59,9 @@ public class AuthTest extends BaseTest {
         .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body(TOKEN_PATH, allOf(notNullValue(), hasLength(15)));
+
     }
 
-    @Test
-    public void GetToken3Test() {
-        given()
-                .spec(requestSpec)
-                .body(admin)
-        .when()
-                .log().body()
-                .post(AUTH_URN)
-        .then()
-                .log().body()
-                .statusCode(HttpStatus.SC_OK)
-                .body(TOKEN_PATH, allOf(notNullValue(), hasLength(15)));
-    }
 
     @Test
     public void Check400CodeTest() {

@@ -19,7 +19,8 @@ public class Booking {
 
     @SerializedName("totalprice")
     @Builder.Default
-    public int totalPrice = 101;
+    public String totalPrice = "101";
+
     @SerializedName("depositpaid")
     @Builder.Default
     public String depositPaid = "true";
